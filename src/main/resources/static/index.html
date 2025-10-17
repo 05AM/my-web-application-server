@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Java Web Server</title>
+    <style>
+        :root {
+            --bg: #f9fafb;
+            --text: #1f2937;
+            --primary: #2563eb;
+            --secondary: #3b82f6;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Segoe UI", sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        p {
+            font-size: 1.1rem;
+            margin-top: 0;
+        }
+
+        .container {
+            text-align: center;
+            padding: 2rem 3rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            background-color: #fff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .routes {
+            margin-top: 1.5rem;
+        }
+
+        .routes a {
+            display: inline-block;
+            margin: 0.3rem 0.6rem;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            background: var(--secondary);
+            color: white;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+
+        .routes a:hover {
+            background: var(--primary);
+        }
+
+        footer {
+            margin-top: 2rem;
+            font-size: 0.85rem;
+            color: #6b7280;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>🚀 My Web Application Server</h1>
+
+    <div class="routes">
+        <a href="/api/hello">/api/hello</a>
+        <a href="/api/ping">/api/ping</a>
+        <a href="/favicon.ico">/favicon.ico</a>
+    </div>
+
+    <footer>
+        © 2025 MyWebServer — Powered by Java NIO2
+    </footer>
+</div>
+</body>
+</html>
