@@ -147,7 +147,7 @@ public class StaticResourceHandler {
                 depth++;
             }
         }
-        return sb.length() == 0 ? "/" : sb.toString();
+        return sb.isEmpty() ? "/" : sb.toString();
     }
 
     private static boolean hasExtension(String path) {

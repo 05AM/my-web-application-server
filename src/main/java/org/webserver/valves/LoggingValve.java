@@ -11,7 +11,19 @@ public class LoggingValve extends ValveBase {
 
     @Override
     public void invoke(Request req, Response res) throws Exception {
-        logger.info(req.toString());
-        invokeNext(req, res);
+        long start = System.nanoTime();
+        try {
+            logger.info(req.toString());
+            invokeNext(req, res);
+        } finally {
+            long elapsedMs = (System.nanoTime() - start) / 1_000_000;
+            logger.info(String.format(
+                "[RESPONSE] %s %s -> %d (%d ms)",
+                req.getMethod(),
+                req.getPath(),
+                res.status().code(),
+                elapsedMs
+            ));
+        }
     }
 }
