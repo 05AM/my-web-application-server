@@ -22,9 +22,11 @@ public class DispatcherServlet implements Servlet {
         HandlerMethod hm = registry.getHandler(req.getMethod(), req.getPath());
 
         if (hm != null) {
-            Object result = hm.invoke();
-            res.setStatus(HttpStatus.OK);
-            res.getWriter().write(result != null ? result.toString() : "");
+            Object result = hm.invoke(req, res);
+            if (!res.isCommitted()) {
+                res.setStatus(HttpStatus.OK);
+                res.getWriter().write(result != null ? result.toString() : "");
+            }
             return;
         }
 
@@ -34,8 +36,6 @@ public class DispatcherServlet implements Servlet {
         }
 
         // not found
-        res.setStatus(HttpStatus.NOT_FOUND);
-        res.setHeader("Content-Type", "text/plain; charset=UTF-8");
-        res.getWriter().write("404 Not Found");
+        res.sendNotFound();
     }
 }

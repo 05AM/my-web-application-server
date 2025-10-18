@@ -33,6 +33,16 @@ public class HttpParser {
             }
         }
 
-        return new Request(method, path, protocol, headers, bodyPart);
+        Map<String, String> form = Map.of();
+        String contentType = headers.entrySet().stream()
+            .filter(e -> e.getKey().equalsIgnoreCase("Content-Type"))
+            .map(Map.Entry::getValue)
+            .findFirst().orElse(null);
+
+        if (contentType != null && contentType.toLowerCase().startsWith("application/x-www-form-urlencoded")) {
+            form = FormUrlEncoded.parse(bodyPart);
+        }
+
+        return new Request(method, path, protocol, headers, bodyPart, form);
     }
 }

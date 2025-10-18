@@ -12,6 +12,7 @@ public class Response {
     private final Map<String, String> headers = new LinkedHashMap<>();
     private final ByteArrayOutputStream buffer = new ByteArrayOutputStream();
     private boolean keepAlive = true;
+    private boolean isCommitted = false;
 
     private PrintWriter writer;
 
@@ -23,6 +24,9 @@ public class Response {
 
     public boolean keepAlive() { return keepAlive; }
     public void setKeepAlive(boolean keepAlive) { this.keepAlive = keepAlive; }
+
+    public boolean isCommitted() { return isCommitted; }
+    public void setIsCommitted(boolean isCommited) { this.isCommitted = isCommited; }
 
     public PrintWriter getWriter() {
         if (writer == null) {
@@ -36,9 +40,27 @@ public class Response {
         return buffer;
     }
 
+    public void writeBody(String content) {
+        getWriter().write(content + "\n");
+        isCommitted = true;
+    }
+
     public byte[] body() {
         if (writer != null) writer.flush();
         return buffer.toByteArray();
+    }
+
+    public void sendNotFound() {
+        this.status = HttpStatus.NOT_FOUND;
+        setHeader("Content-Type", "text/plain; charset=UTF-8");
+        writeBody("404 Not Found");
+    }
+
+    public void sendRedirection(HttpStatus status) {
+        this.status = status;
+        setHeader("Location", "/api/users");
+        setHeader("Content-Length", "0");
+        writeBody("");
     }
 
     public byte[] toHttpBytes() {
